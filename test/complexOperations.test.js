@@ -158,8 +158,78 @@ describe('complexOperation - Unit Tests', () => {
   });
 
   describe('numberOfOddAndEvenNumbers', () => {
-    it('first test for numberOfOddAndEvenNumbers', () => {
-      
+    
+    beforeEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('when ([1,2,3]) should return odd=2 and even=1', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(true);
+
+      const getOddNumbersFromArrayMock = jest.spyOn(basicOperations, 'getOddNumbersFromArray');
+      getOddNumbersFromArrayMock.mockReturnValue([1,3]);
+
+      const getEvenNumbersFromArrayMock = jest.spyOn(basicOperations, 'getEvenNumbersFromArray');
+      getEvenNumbersFromArrayMock.mockReturnValue([2]);
+
+      let matchObject = { 
+          odd: 2, 
+          even: 1
+      };  
+
+      expect(complexOperations.numberOfOddAndEvenNumbers([1,2,3])).toMatchObject(matchObject);
+      expect(isArrayMock).toHaveBeenCalledTimes(1);
+      expect(isNumberMock).toHaveBeenCalledTimes(3);
+      expect(getOddNumbersFromArrayMock).toHaveBeenCalledTimes(1);
+      expect(getEvenNumbersFromArrayMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('when (["a",2]) should return "The array should have only numbers"', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(false);
+
+      expect(complexOperations.numberOfOddAndEvenNumbers(['a',2])).toStrictEqual('The array should have only numbers');
+      expect(isArrayMock).toHaveBeenCalledTimes(1);
+      expect(isNumberMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('when ([]) should return odd=0 and even=0', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+
+      const getOddNumbersFromArrayMock = jest.spyOn(basicOperations, 'getOddNumbersFromArray');
+      getOddNumbersFromArrayMock.mockReturnValue([]);
+
+      const getEvenNumbersFromArrayMock = jest.spyOn(basicOperations, 'getEvenNumbersFromArray');
+      getEvenNumbersFromArrayMock.mockReturnValue([]);
+
+      let matchObject = { 
+          odd: 0, 
+          even: 0
+      }; 
+
+      expect(complexOperations.numberOfOddAndEvenNumbers([])).toMatchObject(matchObject);
+      expect(isArrayMock).toHaveBeenCalledTimes(1);
+      expect(isNumberMock).toHaveBeenCalledTimes(0);
+      expect(getOddNumbersFromArrayMock).toHaveBeenCalledTimes(1);
+      expect(getEvenNumbersFromArrayMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('when (undefined) should return "The param should be an array"', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(false);
+
+      expect(complexOperations.numberOfOddAndEvenNumbers(undefined)).toStrictEqual('The param should be an array');
+      expect(isArrayMock).toHaveBeenCalledTimes(1);
     });
   });
 });

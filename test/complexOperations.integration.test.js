@@ -71,8 +71,30 @@ describe('complexOperation - Integration Tests', () => {
     });
   
     describe('numberOfOddAndEvenNumbers', () => {
-      it('first test for numberOfOddAndEvenNumbers', () => {
-        
+      it('when ([1,2,3,4]) should return odd=2 and even=2', () => {
+        let matchObject = { 
+            odd: 2, 
+            even: 2
+        };  
+
+        expect(complexOperations.numberOfOddAndEvenNumbers([1,2,3,4])).toMatchObject(matchObject);
+      });
+
+      it('when (["a",2]) should return "The array should have only numbers"', () => {
+        expect(complexOperations.numberOfOddAndEvenNumbers(['a',2])).toStrictEqual('The array should have only numbers');
+      });
+
+      it('when ([]) should return odd=0 and even=0', () => {
+        let matchObject = { 
+            odd: 0, 
+            even: 0
+        }; 
+
+        expect(complexOperations.numberOfOddAndEvenNumbers([])).toMatchObject(matchObject);
+      });
+
+      it('when (undefined) should return "The param should be an array"', () => {
+        expect(complexOperations.numberOfOddAndEvenNumbers(undefined)).toStrictEqual('The param should be an array');
       });
     });
   });

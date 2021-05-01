@@ -102,8 +102,52 @@ describe('complexOperation - Unit Tests', () => {
   });
 
   describe('intersectionBetweenArrays', () => {
-    it('first test for intersectionBetweenArrays', () => {
 
+    beforeEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('when ([], "abc") should return "The params should be arrays"', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(false);
+
+      expect(complexOperations.intersectionBetweenArrays([], 'abc')).toStrictEqual('The params should be arrays');
+      expect(isArrayMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('when (undefined, []) should return "The params should be arrays"', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValueOnce(true)
+                 .mockReturnValueOnce(false);
+
+      expect(complexOperations.intersectionBetweenArrays(undefined, [])).toStrictEqual('The params should be arrays');
+      expect(isArrayMock).toHaveBeenCalledTimes(2);
+    });
+
+    it('when ([1,2,3], []) should return "There are not matching elements"', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValueOnce(true)
+                 .mockReturnValueOnce(true);
+
+      const arrayIntersectionMock = jest.spyOn(basicOperations, 'arrayIntersection');
+      arrayIntersectionMock.mockReturnValue([]);
+
+      expect(complexOperations.intersectionBetweenArrays([1,2,3], [])).toStrictEqual('There are not matching elements');
+      expect(isArrayMock).toHaveBeenCalledTimes(2);
+      expect(arrayIntersectionMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('when ([1,4,5], [5,4,9]) should return [4,5]', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValueOnce(true)
+                 .mockReturnValueOnce(true);
+
+      const arrayIntersectionMock = jest.spyOn(basicOperations, 'arrayIntersection');
+      arrayIntersectionMock.mockReturnValue([4,5]);
+
+      expect(complexOperations.intersectionBetweenArrays([1,4,5], [5,4,9])).toEqual([4,5]);
+      expect(isArrayMock).toHaveBeenCalledTimes(2);
+      expect(arrayIntersectionMock).toHaveBeenCalledTimes(1);
     });
   });
 

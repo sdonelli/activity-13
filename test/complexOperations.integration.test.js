@@ -47,8 +47,20 @@ describe('complexOperation - Integration Tests', () => {
     });
   
     describe('intersectionBetweenArrays', () => {
-      it('first test for intersectionBetweenArrays', () => {
-  
+      it('when ([], "abc") should return "The params should be arrays"', () => {
+          expect(complexOperations.intersectionBetweenArrays([], 'abc')).toStrictEqual('The params should be arrays');
+      });
+
+      it('when (123, []) should return "The params should be arrays"', () => {
+        expect(complexOperations.intersectionBetweenArrays(123, [])).toStrictEqual('The params should be arrays');
+      });
+
+      it('when ([], []) should return "There are not matching elements"', () => {
+        expect(complexOperations.intersectionBetweenArrays([], [])).toStrictEqual('There are not matching elements');
+      });
+
+      it('when ([1,4,5], [5,7,9]) should return [5]', () => {
+        expect(complexOperations.intersectionBetweenArrays([1,4,5], [5,7,9])).toEqual([5]);
       });
     });
   

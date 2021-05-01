@@ -65,8 +65,67 @@ describe('complexOperation - Integration Tests', () => {
     });
   
     describe('sortArrayOfObjectsByKey', () => {
-      it('first test for sortArrayOfObjectsByKey', () => {
-  
+      it('when sort by age', () => {
+        let expectedArray = [ 
+          { age: 6, name: 'Leite' }, 
+          { age: 10, name: 'Tom' } 
+        ];
+
+        let paramArray = [
+          { age: 10, name: 'Tom'},
+          { age: 6, name: 'Leite'}
+        ];
+        
+        expect(complexOperations.sortArrayOfObjectsByKey(paramArray, 'age')).toEqual(expectedArray);  
+      });
+
+      it('when sort by name', () => {
+        let expectedArray = [ 
+          { name: 'Leite' }, 
+          { name: 'Leite' }, 
+          { name: 'Tom' }, 
+          { name: 'Zoe' }
+        ];
+
+        let paramArray = [
+          { name: 'Leite' },
+          { name: 'Tom'},
+          { name: 'Zoe'},
+          { name: 'Leite'}
+        ];
+        
+        expect(complexOperations.sortArrayOfObjectsByKey(paramArray, 'name')).toEqual(expectedArray);  
+      });
+
+      it('when first element is not an array', () => {
+        expect(complexOperations.sortArrayOfObjectsByKey('abc', 'age')).toStrictEqual('The first param should be an array');  
+      });
+
+      it('when key is undefined', () => {
+        let paramArray = [
+          { age: 10, name: 'Tom'},
+          { age: 6, name: 'Leite'}
+        ];
+        
+        expect(complexOperations.sortArrayOfObjectsByKey(paramArray, undefined)).toStrictEqual('The second param should be an string');  
+      });
+
+      it('when key is not an string', () => {
+        let paramArray = [
+          { age: 10, name: 'Tom'},
+          { age: 6, name: 'Leite'}
+        ];
+        
+        expect(complexOperations.sortArrayOfObjectsByKey(paramArray, 123)).toStrictEqual('The second param should be an string');  
+      });
+
+      it('when one element on the array does not have the key property', () => {
+        let paramArray = [
+          { age: 10, name: 'Tom'},
+          { age: 6 }
+        ];
+        
+        expect(complexOperations.sortArrayOfObjectsByKey(paramArray, 'name')).toStrictEqual('Some elements in the array does not have the name property');  
       });
     });
   

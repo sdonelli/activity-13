@@ -152,8 +152,101 @@ describe('complexOperation - Unit Tests', () => {
   });
 
   describe('sortArrayOfObjectsByKey', () => {
-    it('first test for sortArrayOfObjectsByKey', () => {
 
+    beforeEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('when sort by age', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(true);
+
+      const isStringMock = jest.spyOn(basicOperations, 'isString');
+      isStringMock.mockReturnValue(true);
+
+      const arrayElementsAreObjectWithKeyMock = jest.spyOn(basicOperations, 'arrayElementsAreObjectWithKey');
+      arrayElementsAreObjectWithKeyMock.mockReturnValue(true);
+
+      let expectedArray = [ 
+        { age: 6, name: 'Leite' }, 
+        { age: 10, name: 'Tom' } 
+      ];
+
+      const sortArrayByKeyMock = jest.spyOn(basicOperations, 'sortArrayByKey');
+      sortArrayByKeyMock.mockReturnValue(expectedArray);
+
+      let paramArray = [
+        { age: 10, name: 'Tom'},
+        { age: 6, name: 'Leite'}
+      ];
+      
+      expect(complexOperations.sortArrayOfObjectsByKey(paramArray, 'age')).toEqual(expectedArray);  
+      expect(isArrayMock).toHaveBeenCalledTimes(1);
+      expect(isStringMock).toHaveBeenCalledTimes(1);
+      expect(arrayElementsAreObjectWithKeyMock).toHaveBeenCalledTimes(1);
+      expect(sortArrayByKeyMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('when first element is not an array', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(false);
+
+      expect(complexOperations.sortArrayOfObjectsByKey('abc', 'age')).toStrictEqual('The first param should be an array'); 
+      expect(isArrayMock).toHaveBeenCalledTimes(1); 
+    });
+
+    it('when key is undefined', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(true);
+
+      const isStringMock = jest.spyOn(basicOperations, 'isString');
+
+      let paramArray = [
+        { age: 10, name: 'Tom'},
+        { age: 6, name: 'Leite'}
+      ];
+      
+      expect(complexOperations.sortArrayOfObjectsByKey(paramArray, undefined)).toStrictEqual('The second param should be an string');
+      expect(isArrayMock).toHaveBeenCalledTimes(1);
+      expect(isStringMock).toHaveBeenCalledTimes(0);  
+    });
+
+    it('when key is not an string', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(true);
+
+      const isStringMock = jest.spyOn(basicOperations, 'isString');
+      isStringMock.mockReturnValue(false);
+
+      let paramArray = [
+        { age: 10, name: 'Tom'},
+        { age: 6, name: 'Leite'}
+      ];
+      
+      expect(complexOperations.sortArrayOfObjectsByKey(paramArray, 123)).toStrictEqual('The second param should be an string');
+      expect(isArrayMock).toHaveBeenCalledTimes(1);
+      expect(isStringMock).toHaveBeenCalledTimes(1);  
+    });
+
+    it('when one element on the array does not have the key property', () => {
+      const isArrayMock = jest.spyOn(basicOperations, 'isArray');
+      isArrayMock.mockReturnValue(true);
+
+      const isStringMock = jest.spyOn(basicOperations, 'isString');
+      isStringMock.mockReturnValue(true);
+      
+      const arrayElementsAreObjectWithKeyMock = jest.spyOn(basicOperations, 'arrayElementsAreObjectWithKey');
+      arrayElementsAreObjectWithKeyMock.mockReturnValue(false);
+
+      let paramArray = [
+        { age: 10, name: 'Tom'},
+        { age: 6 }
+      ];
+      
+      expect(complexOperations.sortArrayOfObjectsByKey(paramArray, 'name')).toStrictEqual('Some elements in the array does not have the name property');  
+      expect(isArrayMock).toHaveBeenCalledTimes(1);
+      expect(isStringMock).toHaveBeenCalledTimes(1);  
+      expect(arrayElementsAreObjectWithKeyMock).toHaveBeenCalledTimes(1);  
     });
   });
 

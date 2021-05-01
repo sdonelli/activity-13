@@ -53,8 +53,51 @@ describe('complexOperation - Unit Tests', () => {
   });
 
   describe('sumGratherThan', () => {
-    it('first test for sumGratherThan', () => {
 
+    beforeEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('when (1, 1, 3) should return "2 is less than 3"', () => {
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(true);
+
+      const sumMock = jest.spyOn(basicOperations, 'sum');
+      sumMock.mockReturnValue(2);
+
+      expect(complexOperations.sumGratherThan(1, 1, 3)).toStrictEqual('2 is less than 3');
+      expect(isNumberMock).toHaveBeenCalledTimes(3);  
+      expect(sumMock).toHaveBeenCalledTimes(1); 
+    });
+
+    it('when (1, 2, undefined) should return "The params should be numbers"', () => {
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValueOnce(true)
+                  .mockReturnValueOnce(true)
+                  .mockReturnValueOnce(false);
+
+      expect(complexOperations.sumGratherThan(1, 2, undefined)).toStrictEqual('The params should be numbers');
+      expect(isNumberMock).toHaveBeenCalledTimes(3);  
+    });
+
+    it('when (9, -1, 3) should return "8 is grather than 3"', () => {
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(true);
+
+      const sumMock = jest.spyOn(basicOperations, 'sum');
+      sumMock.mockReturnValue(8);
+
+      expect(complexOperations.sumGratherThan(9, -1, 3)).toStrictEqual('8 is grather than 3');
+      expect(isNumberMock).toHaveBeenCalledTimes(3);  
+      expect(sumMock).toHaveBeenCalledTimes(1); 
+    });
+
+    it('when ([], 2, 3) should return "The params should be numbers"', () => {
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(false);
+
+      expect(complexOperations.sumGratherThan([], 2, 3)).toStrictEqual('The params should be numbers');
+      expect(isNumberMock).toHaveBeenCalledTimes(1);  
     });
   });
 

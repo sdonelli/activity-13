@@ -28,8 +28,21 @@ describe('complexOperation - Integration Tests', () => {
     });
   
     describe('sumGratherThan', () => {
-      it('first test for sumGratherThan', () => {
-  
+
+      it('when (1, 2, 3) should return "3 is less than 3"', () => {
+        expect(complexOperations.sumGratherThan(1, 2, 3)).toBe('3 is less than 3');  
+      });
+
+      it('when (1, 2, undefined) should return "The params should be numbers"', () => {
+        expect(complexOperations.sumGratherThan(1, 2, undefined)).toStrictEqual('The params should be numbers'); 
+      });
+
+      it('when (9, -1, 3) should return "8 is grather than 3"', () => {
+        expect(complexOperations.sumGratherThan(9, -1, 3)).toBe('8 is grather than 3');
+      });
+
+      it('when ([], 2, 3) should return "The params should be numbers"', () => {
+        expect(complexOperations.sumGratherThan([], 2, 3)).toStrictEqual('The params should be numbers');
       });
     });
   

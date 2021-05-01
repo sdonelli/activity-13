@@ -47,8 +47,143 @@ describe('complexOperation - Unit Tests', () => {
   });
 
   describe('calculateArea', () => {
-    it('first test for calculateArea', () => {
 
+    beforeEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('when figure is square', () => {
+      const isSupportedFigureMock = jest.spyOn(basicOperations, 'isSupportedFigure');
+      isSupportedFigureMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(true);
+
+      const multipMock = jest.spyOn(basicOperations, 'multip');
+      multipMock.mockReturnValue(8);
+
+      expect(complexOperations.calculateArea('square', 2, 4)).toBe(8); 
+      expect(isSupportedFigureMock).toHaveBeenCalled();
+      expect(isNumberMock).toHaveBeenCalled(); 
+      expect(multipMock).toHaveBeenCalled(); 
+    });
+
+    it('when figure is rectangle', () => {
+      const isSupportedFigureMock = jest.spyOn(basicOperations, 'isSupportedFigure');
+      isSupportedFigureMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(true);
+
+      const multipMock = jest.spyOn(basicOperations, 'multip');
+      multipMock.mockReturnValue(6);
+
+      expect(complexOperations.calculateArea('rectangle', 2, 3)).toBe(6);  
+      expect(isSupportedFigureMock).toHaveBeenCalled();
+      expect(isNumberMock).toHaveBeenCalled(); 
+      expect(multipMock).toHaveBeenCalled(); 
+    });
+
+    it('when figure is triangle', () => {
+      const isSupportedFigureMock = jest.spyOn(basicOperations, 'isSupportedFigure');
+      isSupportedFigureMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(true);
+
+      const multipMock = jest.spyOn(basicOperations, 'multip');
+      multipMock.mockReturnValue(8);
+
+      const divisionMock = jest.spyOn(basicOperations, 'division');
+      divisionMock.mockReturnValue(4);
+
+      expect(complexOperations.calculateArea('triangle', 2, 4)).toBe(4);  
+      expect(isSupportedFigureMock).toHaveBeenCalled();
+      expect(isNumberMock).toHaveBeenCalled(); 
+      expect(multipMock).toHaveBeenCalled(); 
+      expect(divisionMock).toHaveBeenCalled(); 
+    });
+
+    it('when figure is circle', () => {
+      const isSupportedFigureMock = jest.spyOn(basicOperations, 'isSupportedFigure');
+      isSupportedFigureMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(true);
+
+      const exponentMock = jest.spyOn(basicOperations, 'exponent');
+      exponentMock.mockReturnValue(64);
+
+      expect(complexOperations.calculateArea('circle', 8)).toBeCloseTo(201.06);  
+      expect(isSupportedFigureMock).toHaveBeenCalled();
+      expect(isNumberMock).toHaveBeenCalled(); 
+      expect(exponentMock).toHaveBeenCalled(); 
+    });
+
+    it('when figure is parallelogram', () => {
+      const isSupportedFigureMock = jest.spyOn(basicOperations, 'isSupportedFigure');
+      isSupportedFigureMock.mockReturnValue(false);
+
+      expect(complexOperations.calculateArea('parallelogram', 8, 2)).toStrictEqual('parallelogram is not supported');  
+      expect(isSupportedFigureMock).toHaveBeenCalled();
+    });
+
+    it('when first param is not a number', () => {
+      const isSupportedFigureMock = jest.spyOn(basicOperations, 'isSupportedFigure');
+      isSupportedFigureMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(false);
+
+      expect(complexOperations.calculateArea('circle', 'a', 2)).toStrictEqual('number1 and number2 should be numbers'); 
+      expect(isSupportedFigureMock).toHaveBeenCalled();
+      expect(isNumberMock).toHaveBeenCalled(); 
+    });
+
+    // The test pass, but the code shouldn't return an error message because the documentation says that second param is optional for circle.
+    it('when second param is not a number', () => {
+      const isSupportedFigureMock = jest.spyOn(basicOperations, 'isSupportedFigure');
+      isSupportedFigureMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValueOnce(true)
+                  .mockReturnValueOnce(false);
+
+      expect(complexOperations.calculateArea('square', 2, 'a')).toStrictEqual('number1 and number2 should be numbers');  
+      expect(isSupportedFigureMock).toHaveBeenCalled();
+      expect(isNumberMock).toHaveBeenCalledTimes(2); 
+    });
+
+    it('when figure is TRIANGLE', () => {
+      const isSupportedFigureMock = jest.spyOn(basicOperations, 'isSupportedFigure');
+      isSupportedFigureMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(true);
+
+      const multipMock = jest.spyOn(basicOperations, 'multip');
+      multipMock.mockReturnValue(8);
+
+      const divisionMock = jest.spyOn(basicOperations, 'division');
+      divisionMock.mockReturnValue(4);
+
+      expect(complexOperations.calculateArea('TRIANGLE', 2, 4)).toBe(4);  
+      expect(isSupportedFigureMock).toHaveBeenCalled();
+      expect(isNumberMock).toHaveBeenCalled(); 
+      expect(multipMock).toHaveBeenCalled(); 
+      expect(divisionMock).toHaveBeenCalled(); 
+    });
+
+    it('force to pass by switch default value', () => {
+      const isSupportedFigureMock = jest.spyOn(basicOperations, 'isSupportedFigure');
+      isSupportedFigureMock.mockReturnValue(true);
+
+      const isNumberMock = jest.spyOn(basicOperations, 'isNumber');
+      isNumberMock.mockReturnValue(true);
+
+      expect(complexOperations.calculateArea('parallelogram', 2, 4)).toStrictEqual('parallelogram is not supported');  
+      expect(isSupportedFigureMock).toHaveBeenCalled();
+      expect(isNumberMock).toHaveBeenCalled(); 
     });
   });
 

@@ -22,8 +22,42 @@ describe('complexOperation - Integration Tests', () => {
     });
   
     describe('calculateArea', () => {
-      it('first test for calculateArea', () => {
-  
+      
+      it('when figure is square', () => {
+        expect(complexOperations.calculateArea('square', 2, 4)).toBe(8);  
+      });
+
+      it('when figure is rectangle', () => {
+        expect(complexOperations.calculateArea('rectangle', 2, 3)).toBe(6);  
+      });
+
+      it('when figure is triangle', () => {
+        expect(complexOperations.calculateArea('triangle', 2, 4)).toBe(4);  
+      });
+
+      it('when figure is circle', () => {
+        expect(complexOperations.calculateArea('circle', 8)).toBeCloseTo(201.06);  
+      });
+
+      it('when figure is parallelogram', () => {
+        expect(complexOperations.calculateArea('parallelogram', 8, 2)).toStrictEqual('parallelogram is not supported');  
+      });
+
+      it('when first param is not a number', () => {
+        expect(complexOperations.calculateArea('circle', 'a', 2)).toStrictEqual('number1 and number2 should be numbers');  
+      });
+
+      // The test pass, but the code shouldn't return an error message because the documentation says that second param is optional for circle.
+      it('when second param is not a number', () => {
+        expect(complexOperations.calculateArea('circle', 2, 'a')).toStrictEqual('number1 and number2 should be numbers');  
+      });
+
+      it('when second param is not a number', () => {
+        expect(complexOperations.calculateArea('square', 2, 'a')).toStrictEqual('number1 and number2 should be numbers');  
+      });
+
+      it('when figure is TRIANGLE', () => {
+        expect(complexOperations.calculateArea('TRIANGLE', 2, 4)).toBe(4);  
       });
     });
   
@@ -47,6 +81,7 @@ describe('complexOperation - Integration Tests', () => {
     });
   
     describe('intersectionBetweenArrays', () => {
+      
       it('when ([], "abc") should return "The params should be arrays"', () => {
           expect(complexOperations.intersectionBetweenArrays([], 'abc')).toStrictEqual('The params should be arrays');
       });
@@ -65,6 +100,7 @@ describe('complexOperation - Integration Tests', () => {
     });
   
     describe('sortArrayOfObjectsByKey', () => {
+      
       it('when sort by age', () => {
         let expectedArray = [ 
           { age: 6, name: 'Leite' }, 
@@ -130,6 +166,7 @@ describe('complexOperation - Integration Tests', () => {
     });
   
     describe('numberOfOddAndEvenNumbers', () => {
+      
       it('when ([1,2,3,4]) should return odd=2 and even=2', () => {
         let matchObject = { 
             odd: 2, 
